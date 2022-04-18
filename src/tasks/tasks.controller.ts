@@ -4,6 +4,7 @@ import { GetTasksFilterDto } from "./dto/get-tasks-filter.dto";
 import { Task } from "./task.entity";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { TaskStatus } from "./task-status.enum";
+import { UpdateTaskStatusDto } from "./dto/update-task-status.dto";
 
 @Controller("tasks")
 export class TasksController {
@@ -34,11 +35,12 @@ export class TasksController {
     return this.taskService.deleteTask(id);
   }
 
-  @Patch("/:id/status")
+  @Patch('/:id/status')
   updateTaskStatus(
-    @Param("id") id: string,
-    @Body("status") status: TaskStatus
+    @Param('id') id: string,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
   ): Task {
+    const { status } = updateTaskStatusDto;
     return this.taskService.updateTaskStatus(id, status);
   }
 }
